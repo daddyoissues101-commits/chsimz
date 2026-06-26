@@ -1,0 +1,300 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: transparent; }
+  .hero {
+    min-height: 380px;
+    background: linear-gradient(180deg, #1a0a00 0%, #3d1a00 40%, #6b3310 70%, #c87941 100%);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem 3rem;
+  }
+  .stars {
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none;
+  }
+  .star { position: absolute; background: #fff; border-radius: 50%; }
+  .mountains {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 120px; pointer-events: none;
+  }
+  .hero-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    font-weight: 700;
+    color: #f4c97e;
+    text-align: center;
+    line-height: 1.15;
+    position: relative;
+    z-index: 2;
+    letter-spacing: 2px;
+  }
+  .hero-sub {
+    font-size: 1rem;
+    color: #e8c99a;
+    margin-top: 0.75rem;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    opacity: 0.85;
+    font-style: italic;
+  }
+  .scroll-hint {
+    position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%);
+    font-size: 13px; color: #c87941; z-index: 2; opacity: 0.7; animation: bounce 1.8s infinite;
+  }
+  @keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(-6px)} }
+
+  .section { padding: 2rem 1.25rem; }
+  .section-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1.25rem;
+    letter-spacing: 1px;
+    border-left: 3px solid #c87941;
+    padding-left: 0.75rem;
+  }
+
+  /* Quote section */
+  .quote-card {
+    background: var(--surface-1);
+    border: 0.5px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem 1.25rem 1rem;
+    position: relative;
+  }
+  .quote-mark { font-size: 3rem; color: #c87941; line-height: 0.5; font-family: Georgia, serif; opacity: 0.4; }
+  .quote-text {
+    font-size: 1.05rem;
+    color: var(--text-primary);
+    line-height: 1.7;
+    font-style: italic;
+    margin: 0.5rem 0;
+    font-family: var(--font-voice, Georgia, serif);
+  }
+  .quote-attr { font-size: 0.82rem; color: var(--text-secondary); text-align: right; margin-top: 0.5rem; }
+  .quote-nav {
+    display: flex; gap: 8px; justify-content: center; margin-top: 1rem;
+  }
+  .quote-dot {
+    width: 8px; height: 8px; border-radius: 50%; background: var(--border-strong); cursor: pointer; transition: background 0.2s;
+  }
+  .quote-dot.active { background: #c87941; }
+
+  /* Game cards */
+  .games-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+  .game-card {
+    border-radius: 12px; padding: 1rem 0.85rem;
+    background: var(--surface-1); border: 0.5px solid var(--border);
+    transition: border-color 0.2s;
+    cursor: default;
+  }
+  .game-card:hover { border-color: #c87941; }
+  .game-icon { font-size: 1.75rem; margin-bottom: 0.4rem; }
+  .game-name { font-size: 0.9rem; font-weight: 500; color: var(--text-primary); margin-bottom: 0.15rem; }
+  .game-tag { font-size: 0.75rem; color: var(--text-muted); }
+  .game-fav { font-size: 0.72rem; color: #c87941; font-weight: 500; margin-top: 0.3rem; display: inline-block; }
+
+  /* Message wall */
+  .message-card {
+    background: var(--surface-1); border: 0.5px solid var(--border);
+    border-radius: 12px; padding: 1rem 1.25rem;
+    margin-bottom: 10px;
+  }
+  .msg-from { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.2rem; }
+  .msg-text { font-size: 0.95rem; color: var(--text-primary); line-height: 1.55; }
+
+  /* Cake section */
+  .cake-section {
+    text-align: center; padding: 2rem 1.25rem 1.5rem;
+    background: var(--surface-1); border-top: 0.5px solid var(--border);
+  }
+  .cake-svg { display: block; margin: 0 auto 1rem; }
+  .cake-msg { font-size: 1rem; color: var(--text-secondary); line-height: 1.6; max-width: 400px; margin: 0 auto; }
+  .heart { color: #c87941; }
+
+  /* Candle blow button */
+  .candle-btn {
+    margin-top: 1.25rem;
+    padding: 0.65rem 1.75rem;
+    background: #c87941;
+    color: #fff;
+    border: none;
+    border-radius: var(--radius);
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    font-family: var(--font-sans);
+  }
+  .candle-btn:hover { background: #a8622e; }
+  .candle-btn:active { transform: scale(0.97); }
+  .confetti-msg { margin-top: 1rem; font-size: 0.95rem; color: #c87941; font-weight: 500; min-height: 1.5rem; }
+</style>
+
+<h2 class="sr-only">Happy Birthday Chirag — an interactive gamer birthday site</h2>
+
+<!-- HERO -->
+<div class="hero" id="hero">
+  <svg class="stars" xmlns="http://www.w3.org/2000/svg" id="stars-svg"></svg>
+  <svg class="mountains" viewBox="0 0 680 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <polygon points="0,120 80,45 160,90 260,20 370,75 460,30 560,70 640,40 680,60 680,120" fill="#1a0800" opacity="0.9"/>
+    <polygon points="0,120 50,70 120,100 200,50 300,85 400,45 500,80 600,55 680,75 680,120" fill="#2a0f00" opacity="0.7"/>
+  </svg>
+  <div class="hero-title">Happy Birthday,<br>Chirag 🎂</div>
+  <div class="hero-sub">"We don't choose when we come into this world, pardner… but we can choose what we do with the time we're given."</div>
+  <div class="scroll-hint"><i class="ti ti-chevron-down" aria-hidden="true"></i> scroll on down</div>
+</div>
+
+<!-- ARTHUR QUOTES -->
+<div class="section">
+  <div class="section-title">Words from the frontier</div>
+  <div class="quote-card">
+    <div class="quote-mark">"</div>
+    <div class="quote-text" id="quote-text">I guess I'm just a drifter... but today, you're the reason I ride.</div>
+    <div class="quote-attr" id="quote-attr">— Arthur Morgan, probably, wishing you a happy birthday</div>
+    <div class="quote-nav" id="quote-nav"></div>
+  </div>
+</div>
+
+<!-- GAMES -->
+<div class="section" style="padding-top:0">
+  <div class="section-title">His hall of legends</div>
+  <div class="games-grid">
+    <div class="game-card">
+      <div class="game-icon">🤠</div>
+      <div class="game-name">Red Dead Redemption 2</div>
+      <div class="game-tag">Open world epic</div>
+      <div class="game-fav">✦ All-time favourite</div>
+    </div>
+    <div class="game-card">
+      <div class="game-icon">🔥</div>
+      <div class="game-name">Elden Ring</div>
+      <div class="game-tag">Soulslike / RPG</div>
+    </div>
+    <div class="game-card">
+      <div class="game-icon">⚔️</div>
+      <div class="game-name">Dark Souls</div>
+      <div class="game-tag">You died (repeatedly)</div>
+    </div>
+    <div class="game-card">
+      <div class="game-icon">📖</div>
+      <div class="game-name">Story games</div>
+      <div class="game-tag">A man with taste</div>
+    </div>
+  </div>
+</div>
+
+<!-- BIRTHDAY CAKE -->
+<div class="cake-section">
+  <div class="section-title" style="text-align:left">Blow out the candles</div>
+  <svg class="cake-svg" width="200" height="190" viewBox="0 0 200 190" xmlns="http://www.w3.org/2000/svg">
+    <!-- candles -->
+    <rect x="72" y="38" width="10" height="30" rx="3" fill="#e8c97a" id="c1"/>
+    <rect x="95" y="28" width="10" height="38" rx="3" fill="#f4a261" id="c2"/>
+    <rect x="118" y="38" width="10" height="30" rx="3" fill="#e8c97a" id="c3"/>
+    <!-- flames -->
+    <g id="flames">
+      <ellipse cx="77" cy="34" rx="4" ry="6" fill="#f4c430" opacity="0.95">
+        <animate attributeName="ry" values="6;7;5;6" dur="0.8s" repeatCount="indefinite"/>
+      </ellipse>
+      <ellipse cx="100" cy="24" rx="4" ry="6" fill="#f4c430" opacity="0.95">
+        <animate attributeName="ry" values="6;5;7;6" dur="0.9s" repeatCount="indefinite"/>
+      </ellipse>
+      <ellipse cx="123" cy="34" rx="4" ry="6" fill="#f4c430" opacity="0.95">
+        <animate attributeName="ry" values="5;7;6;5" dur="0.7s" repeatCount="indefinite"/>
+      </ellipse>
+    </g>
+    <!-- cake layers -->
+    <rect x="40" y="70" width="120" height="38" rx="8" fill="#c87941"/>
+    <rect x="30" y="108" width="140" height="50" rx="10" fill="#a85c2a"/>
+    <!-- frosting drips -->
+    <path d="M40,70 Q50,58 60,70 Q70,58 80,70 Q90,58 100,70 Q110,58 120,70 Q130,58 140,70 Q150,58 160,70" fill="none" stroke="#f5e6c8" stroke-width="6" stroke-linecap="round"/>
+    <path d="M30,108 Q42,96 54,108 Q66,96 78,108 Q90,96 102,108 Q114,96 126,108 Q138,96 150,108 Q162,96 170,108" fill="none" stroke="#f5e6c8" stroke-width="6" stroke-linecap="round"/>
+    <!-- plate -->
+    <ellipse cx="100" cy="158" rx="80" ry="8" fill="#d4b896" opacity="0.5"/>
+    <!-- stars decoration -->
+    <text x="58" y="100" font-size="12" fill="#f5e6c8" opacity="0.7">★</text>
+    <text x="130" y="100" font-size="12" fill="#f5e6c8" opacity="0.7">★</text>
+    <text x="90" y="138" font-size="12" fill="#f5e6c8" opacity="0.7">✦</text>
+  </svg>
+  <div class="cake-msg">
+    Here's to another year of epic adventures, legendary rides across the frontier, and surviving countless boss fights. <span class="heart">♥</span>
+  </div>
+  <button class="candle-btn" onclick="blowCandles()" id="blow-btn">
+    <i class="ti ti-wind" aria-hidden="true"></i> Blow the candles!
+  </button>
+  <div class="confetti-msg" id="confetti-msg"></div>
+</div>
+
+<script>
+const quotes = [
+  { text: "I guess I'm just a drifter… but today, you're the reason I ride.", attr: "— Arthur Morgan, probably, wishing you a happy birthday" },
+  { text: "Funny thing about birthdays — every year you survive is a year of honour earned.", attr: "— Arthur's journal, imaginary entry" },
+  { text: "You may not always get what you want in this world, but damn if you don't deserve a fine birthday.", attr: "— Arthur Morgan, speaking his truth" },
+  { text: "I've seen outlaws, I've seen lawmen… but a man who loves RDR2 like you do? That's someone worth riding beside.", attr: "— Arthur Morgan, honorary gamer" },
+];
+
+let current = 0;
+const qText = document.getElementById('quote-text');
+const qAttr = document.getElementById('quote-attr');
+const qNav = document.getElementById('quote-nav');
+
+quotes.forEach((_, i) => {
+  const dot = document.createElement('div');
+  dot.className = 'quote-dot' + (i === 0 ? ' active' : '');
+  dot.onclick = () => showQuote(i);
+  qNav.appendChild(dot);
+});
+
+function showQuote(i) {
+  current = i;
+  qText.style.opacity = '0';
+  setTimeout(() => {
+    qText.textContent = quotes[i].text;
+    qAttr.textContent = quotes[i].attr;
+    qText.style.opacity = '1';
+  }, 150);
+  document.querySelectorAll('.quote-dot').forEach((d, idx) => {
+    d.classList.toggle('active', idx === i);
+  });
+}
+qText.style.transition = 'opacity 0.15s';
+setInterval(() => showQuote((current + 1) % quotes.length), 4000);
+
+// Stars
+const svgStars = document.getElementById('stars-svg');
+for (let i = 0; i < 50; i++) {
+  const s = document.createElementNS('http://www.w3.org/2000/svg','circle');
+  const x = Math.random() * 100, y = Math.random() * 60;
+  const r = Math.random() * 1.2 + 0.3;
+  s.setAttribute('cx', x + '%');
+  s.setAttribute('cy', y + '%');
+  s.setAttribute('r', r);
+  s.setAttribute('fill', 'white');
+  s.setAttribute('opacity', (Math.random() * 0.5 + 0.3).toFixed(2));
+  svgStars.appendChild(s);
+}
+
+// Candle blow
+function blowCandles() {
+  const flames = document.getElementById('flames');
+  const btn = document.getElementById('blow-btn');
+  const msg = document.getElementById('confetti-msg');
+  flames.style.transition = 'opacity 0.5s';
+  flames.style.opacity = '0';
+  btn.disabled = true;
+  btn.style.opacity = '0.5';
+  const wishes = [
+    "Happy Birthday Chirag! 🎉 May all your builds go flawless and all your boss fights end in victory! 🤠",
+    "🎂 Another year older, another year of legendary adventures. You're 10/10, no review needed.",
+    "Here's to you — the Arthur Morgan of our hearts. Happy Birthday! ♥",
+  ];
+  msg.textContent = wishes[Math.floor(Math.random() * wishes.length)];
+}
+</script>
